@@ -8,25 +8,10 @@ def Admin_menu():
 2. Teacher Management
 3. Course Management
 4. Department Management
-5. Reports
 0. Logout
 ==================================="""
     print(menu_text)
-
-def report_menu():
-    menu_text ="""
-===================================
-           Reports
-===================================
-1. Student Report
-2. Teacher Report
-3. Course Report
-4. Department Report
-0. Back
-==================================="""
-    print(menu_text)
-    
-
+   
 def Student_Management_menu():
     menu_text = """
 ===================================
@@ -150,7 +135,7 @@ def course_edit_menu():
 ===================================
 1. Edit Course Name
 2. Edit Credit hours
-3. Edit Assigned Teacher
+3. Change Assigned Teacher
 0. Back
 ==================================="""
     print(menu_text)
@@ -167,10 +152,6 @@ def department_edit_menu():
 ==================================="""
     print(menu_text)
 
-def success_message(message):
-    print("=" * 35)
-    print(message)
-    print("=" * 35)
     
 def teacher_edit_message():
     print("="*30)
@@ -181,7 +162,8 @@ def student_edit_message():
     print("="*30)
     print("Student data Updated Successfully")
     print("="*30)
+    
 def department_edit_message():
     print("="*30)
-    print("Student data Updated Successfully")
+    print("Department data Updated Successfully")
     print("="*30)

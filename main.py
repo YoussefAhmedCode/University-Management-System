@@ -2,16 +2,15 @@ from managers.student_manager import StudentManager
 from managers.teacher_manager import TeacherManager
 from managers.course_manager import CourseManager
 from managers.department_manager import DepartmentManager
-from managers.report_manager import ReportManager
 from login import login_attempt
 import menus
 
-# Initialize managers
+
 student_manager = StudentManager()
 teacher_manager = TeacherManager()
 course_manager = CourseManager()
 department_manager = DepartmentManager()
-report_manager = ReportManager()
+
 
 while True:
     print("\n" + "="*35)
@@ -85,7 +84,7 @@ while True:
                     elif sub_choice == "6":
                         course_manager.assign_teacher()
                     elif sub_choice == "7":
-                        course_manager.register_course()
+                        course_manager.register_student()
                     elif sub_choice == "0":
                         break
             
@@ -110,22 +109,6 @@ while True:
                         break
                     else:
                         print("Invalid Choice.")
-            elif choice == "5":
-                while True:
-                    menus.report_menu()
-                    rep_choice = input("Choice: ")
-                    if rep_choice == "1":
-                        report_manager.student_report()
-                    elif rep_choice == "2":
-                        report_manager.teacher_report()
-                    elif rep_choice == "3":
-                        report_manager.course_report()
-                    elif rep_choice == "4":
-                        report_manager.department_report()
-                    elif rep_choice == "0":
-                        break
-                    else:
-                        print("Invalid choice.")
                         
             elif choice == "0":
                 break
@@ -145,6 +128,8 @@ while True:
                 teacher_manager.edit_grades(user)
             elif choice == "5":
                 teacher_manager.take_attendance(user)
+            elif choice == "6":
+                teacher_manager.assign_course()
             elif choice == "0":
                 print("Logging out...")
                 break
@@ -161,9 +146,9 @@ while True:
             elif choice == "2":
                 student_manager.view_courses(user)
             elif choice == "3":
-                course_manager.register_student(user)
+                course_manager.register_course(user)
             elif choice == "4":
-                course_manager.drop_student_from_course(user)
+                course_manager.drop_course(user)
             elif choice == "5":
                 student_manager.view_grades(user)
             elif choice == "6":

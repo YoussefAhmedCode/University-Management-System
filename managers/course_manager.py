@@ -14,7 +14,7 @@ class CourseManager:
 
         while True:
 
-            course_id = input("Enter Course ID: ").strip()
+            course_id = input("Enter Course ID: ").strip().upper()
 
             if course_id == "":
                 print("Course ID cannot be empty.")
@@ -23,7 +23,7 @@ class CourseManager:
             found = False
 
             for course in courses:
-                if course["course_id"].lower() == course_id.lower():
+                if course["course_id"].upper() == course_id.upper():
                     found = True
                     break
 
@@ -37,13 +37,13 @@ class CourseManager:
         departments_data = load_data("data/departments.json")
 
         while True:
-            department_input = input("Enter Department: ").strip()
+            department_input = input("Enter Department: ").strip().title()
             found_dept = False
 
             for dept in departments_data:
-                if dept["name"].lower() == department_input.lower():
+                if dept["name"].title() == department_input.title():
                     found_dept = True
-                    department = dept["name"]
+                    department = dept["name"].title()
                     break
 
             if found_dept:
@@ -60,8 +60,8 @@ class CourseManager:
             try:
                 credit_hours = int(input("Enter Credit Hours: "))
 
-                if credit_hours <= 0:
-                    print("Credit hours must be greater than zero.")
+                if credit_hours <= 0 or credit_hours>4 :
+                    print("Credit hours must be greater than zero and less than 5.")
                     continue
 
                 break
@@ -92,11 +92,8 @@ class CourseManager:
             print("Course Name    :", course["course_name"])
             print("Department     :", course["department"])
             print("Credit Hours   :", course["credit_hours"])
-
-            # CHANGED: teacher_id -> teacher_ids
-            print("Teachers       :", course.get("teacher_ids", []))
-
-            print("Students       :", len(course["enrolled_students"]))
+            print("Teachers       :", course["teacher_ids"])
+            print("Number of Students       :", len(course["enrolled_students"]))
 
             print("-" * 40)
 
@@ -108,21 +105,18 @@ class CourseManager:
             print("No Courses Found.")
             return
 
-        course_id = input("Enter Course ID: ").strip()
+        course_id = input("Enter Course ID: ").strip().upper()
 
         for course in courses:
 
-            if course["course_id"].lower() == course_id.lower():
+            if course["course_id"].upper() == course_id.upper():
 
                 print("\n===== Course Found =====\n")
                 print("Course ID      :", course["course_id"])
                 print("Course Name    :", course["course_name"])
                 print("Department     :", course["department"])
                 print("Credit Hours   :", course["credit_hours"])
-
-                # CHANGED: teacher_id -> teacher_ids
-                print("Teachers       :", course.get("teacher_ids", []))
-
+                print("Teachers       :", course["teacher_ids"])
                 print("Students       :", len(course["enrolled_students"]))
 
                 return
@@ -138,11 +132,11 @@ class CourseManager:
             print("\nNo Courses Found.\n")
             return
 
-        course_id = input("Enter Course ID to Update: ").strip()
+        course_id = input("Enter Course ID to Update: ").strip().upper()
 
         for course in courses:
 
-            if course["course_id"].lower() == course_id.lower():
+            if course["course_id"].upper() == course_id.upper():
                 while True:
                     course_edit_menu()
                     choice = input("Enter your Choice (0-4): ")
@@ -154,39 +148,55 @@ class CourseManager:
                     elif choice == "2":
                         try:
                             credit_hours = int(input("New Credit Hours: "))
-                            if credit_hours <= 0:
-                                print("Credit hours must be greater than zero.")
+                            if credit_hours <= 0 or credit_hours>4 :
+                                print("Credit hours must be greater than zero and less than 5.")
                                 continue
                             course["credit_hours"] = credit_hours
                         except ValueError:
                             print("Invalid input.")
 
                     elif choice == "3":
+
                         teacher_id = int(input("Enter Old Teacher ID: "))
                         teacher_new_id = int(input("Enter New Teacher ID: "))
 
+                        found_teacher = False
+
+                        for teacher in teachers:
+                            if teacher["teacher_id"] == teacher_new_id:
+                                found_teacher = True
+                                break
+                            
+                        if not found_teacher:
+                            print("New Teacher Not Found.")
+                            continue
+
                         for i in range(len(course["teacher_ids"])):
+                        
                             if course["teacher_ids"][i] == teacher_id:
                                 course["teacher_ids"][i] = teacher_new_id
                                 break
+                            
                         else:
-                            print("Old teacher is not assigned to this course.")
+                            print("Old Teacher Is Not Assigned To This Course.")
                             continue
 
                         for teacher in teachers:
-
+                        
                             if teacher["teacher_id"] == teacher_id:
+                            
                                 if course_id in teacher["courses"]:
                                     teacher["courses"].remove(course_id)
 
-                            if teacher["teacher_id"] == teacher_new_id:
+                            elif teacher["teacher_id"] == teacher_new_id:
+                            
                                 if course_id not in teacher["courses"]:
                                     teacher["courses"].append(course_id)
 
                         save_data("data/teachers.json", teachers)
                         save_data("data/courses.json", courses)
 
-                        print("Teacher updated successfully.")
+                        print("Teacher Updated Successfully.")
 
                     elif choice == "0":
                         break
@@ -206,28 +216,41 @@ class CourseManager:
         courses = load_data("data/courses.json")
         teachers = load_data("data/teachers.json")
         students = load_data("data/students.json")
+        
         if not courses:
             print("\nNo Courses Found.\n")
             return
-        course_id = input("Enter Course ID to Delete: ").strip()
+        
+        course_id = input("Enter Course ID to Delete: ").strip().upper()
+        
         for course in courses:
-            if course["course_id"].lower() == course_id.lower():
+            
+            if course["course_id"].upper() == course_id.upper():
                 confirm = input("Are you sure? (Y/N): ").strip().lower()
+                
                 if confirm == "y":
                     for teacher in teachers:
-                        if course_id in teacher.get("courses", []):
+                        if course_id in teacher["courses"]:
                             teacher["courses"].remove(course_id)
+                            
+                            
                     save_data("data/teachers.json", teachers)
+                    
                     for student in students:
-                        if course_id in student.get("courses", []):
+                        if course_id in student["courses"]:
                             student["courses"].remove(course_id)
+                            
+                            
                     save_data("data/students.json", students)
                     courses.remove(course)
                     save_data("data/courses.json", courses)
                     print("\nCourse Deleted Successfully.\n")
+                    return
+                    
                 else:
                     print("\nDelete Cancelled.\n")
                 return
+            
         print("\nCourse Not Found.\n")
 
     def assign_teacher(self):
@@ -235,7 +258,7 @@ class CourseManager:
         courses = load_data("data/courses.json")
         teachers = load_data("data/teachers.json")
 
-        course_id = input("Enter Course ID: ").strip()
+        course_id = input("Enter Course ID: ").strip().upper()
 
         try:
             teacher_id = int(input("Enter Teacher ID: "))
@@ -248,12 +271,9 @@ class CourseManager:
 
         for course in courses:
 
-            if course["course_id"].lower() == course_id.lower():
+            if course["course_id"].upper() == course_id.upper():
 
                 found_course = True
-
-                if "teacher_ids" not in course:
-                    course["teacher_ids"] = []
 
                 for teacher in teachers:
 
@@ -261,8 +281,12 @@ class CourseManager:
 
                         found_teacher = True
 
+                        if teacher["department"].title() != course["department"].title():
+                            print("Teacher and Course Departments Do Not Match.")
+                            return
+
                         if teacher_id in course["teacher_ids"]:
-                            print("Teacher already assigned to this course.")
+                            print("Teacher Already Assigned To This Course.")
                             return
 
                         course["teacher_ids"].append(teacher_id)
@@ -273,27 +297,25 @@ class CourseManager:
                         save_data("data/courses.json", courses)
                         save_data("data/teachers.json", teachers)
 
-                        print("Teacher assigned successfully.")
+                        print("Teacher Assigned Successfully.")
                         return
-
-                break
 
         if not found_course:
             print("Course Not Found.")
         elif not found_teacher:
             print("Teacher Not Found.")
 
-    def register_course(self):
+    def register_student(self):
         courses = load_data("data/courses.json")
         students = load_data("data/students.json")
 
         found_course = False
 
-        course_id = input("Enter course ID: ").lower()
+        course_id = input("Enter course ID: ").upper()
         print("-" * 20)
 
         for course in courses:
-            if course["course_id"] == course_id:
+            if course["course_id"].upper() == course_id.upper():
                 found_course = True
 
                 while True:
@@ -334,33 +356,32 @@ class CourseManager:
 
         save_data("data/students.json", students)
         save_data("data/courses.json", courses)
-    
-    
-    def register_student(self, logged_in_user):
+
+    def register_course(self, logged_in_user):
         courses = load_data("data/courses.json")
         students = load_data("data/students.json")
 
         found_course = False
         student_record = None
-        for s in students:
-            if s["email"] == logged_in_user["email"]:
-                student_record = s
+        for student in students:
+            if student["email"] == logged_in_user["email"]:
+                student_record = student
                 break
 
         if not student_record:
             print("Student record not found.")
             return
 
-        course_id = input("Enter course ID: ").strip()
+        course_id = input("Enter course ID: ").strip().upper()
         print("-" * 20)
 
         for course in courses:
-            if course["course_id"].lower() == course_id.lower():
+            if course["course_id"].upper() == course_id.upper():
                 found_course = True
 
                 already_registered = False
-                for c in student_record.get("courses", []):
-                    if c.lower() == course_id.lower():
+                for c in student_record["courses"]:
+                    if c.upper() == course_id.upper():
                         already_registered = True
                         break
 
@@ -379,47 +400,76 @@ class CourseManager:
         save_data("data/students.json", students)
         save_data("data/courses.json", courses)
 
+    def drop_course(self, logged_in_user):
 
-    def drop_student_from_course(self, logged_in_user):
         courses = load_data("data/courses.json")
         students = load_data("data/students.json")
+        attendance = load_data("data/attendance.json")
 
         found_course = False
         student_record = None
+
         for student in students:
+
             if student["email"] == logged_in_user["email"]:
                 student_record = student
                 break
 
         if not student_record:
-            print("Student record not found.")
+            print("Student Not Found.")
             return
 
-        course_id = input("Enter course ID: ").strip()
+        course_id = input("Enter Course ID: ").strip().upper()
+
         print("-" * 20)
 
         for course in courses:
-            if course["course_id"].lower() == course_id.lower():
+
+            if course["course_id"] == course_id:
+
                 found_course = True
 
                 target_course = None
-                for c in student_record.get("courses", []):
-                    if c.lower() == course_id.lower():
+
+                for c in student_record["courses"]:
+
+                    if c == course_id:
                         target_course = c
                         break
 
                 if target_course:
+
                     student_record["courses"].remove(target_course)
+
                     if student_record["student_id"] in course["enrolled_students"]:
                         course["enrolled_students"].remove(student_record["student_id"])
-                    print("Course dropped successfully.")
+
+                    if "grades" in student_record:
+
+                        if course_id in student_record["grades"]:
+                            del student_record["grades"][course_id]
+
+                    attendance_new = []
+
+                    for record in attendance:
+
+                        if record["student_id"] == student_record["student_id"] and record["course_id"] == course_id:
+                            continue
+
+                        attendance_new.append(record)
+
+                    attendance = attendance_new
+
+                    print("Course Dropped Successfully.")
+
                 else:
-                    print("You didn't register this course to drop.")
+                    print("You Didn't Register This Course.")
 
                 break
 
         if not found_course:
-            print("Course not found.")
+            print("Course Not Found.")
 
         save_data("data/students.json", students)
         save_data("data/courses.json", courses)
+        save_data("data/attendance.json", attendance)

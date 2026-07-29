@@ -38,7 +38,7 @@ class TeacherManager:
             print(
                 "Error: Department",
                 department_input,
-                "does not exist. Please enter a valid department.",
+                "doesn't exist. Please enter a valid department.",
             )
 
         office = input("Enter Teacher Office: ")
@@ -68,12 +68,34 @@ class TeacherManager:
         save_data("data/teachers.json", teachers)
 
         print("=" * 30)
-        print(teacher.first_name, teacher.last_name, "has been added successfully.")
+        print("Dr/",teacher.first_name, teacher.last_name, "has been added successfully.")
         print("Teacher ID:", teacher.teacher_id)
         print("Email:", teacher.email)
         print("=" * 30)
 
         return teacher
+    def view_all_teachers(self):
+
+        teachers = load_data("data/teachers.json")
+
+        if len(teachers) == 0:
+            print("No teachers found.")
+            return
+
+        print("All Teachers:")
+
+        for teacher in teachers:
+
+            print("-" * 20)
+
+            for key, value in teacher.items():
+
+                if key == "password":
+                    continue
+
+                print(key, ":", value)
+
+            print("-" * 20)
 
     def search_teacher(self):
 
@@ -110,6 +132,65 @@ class TeacherManager:
 
         if not found:
             print("There is no teacher with this ID!")
+            
+            
+    def edit_teacher(self):
+            teachers = load_data("data/teachers.json")
+            users = load_data("data/users.json")
+    
+            try:
+    
+                teacher_id = int(input("Enter Teacher ID: "))
+                found = False
+    
+                for teacher in teachers:
+                    if teacher["teacher_id"] == teacher_id:
+                        found = True
+                        while True:
+                            teacher_edit_menu()
+                            choice = input("Enter Your choice: ")
+    
+                            if choice == "1":
+                                teacher["first_name"] = input("Enter New First Name: ")
+                                teacher_edit_message()
+    
+                            elif choice == "2":
+                                teacher["last_name"] = input("Enter New Last Name: ")
+                                teacher_edit_message()
+    
+                            elif choice == "3":
+                                for user in users:
+                                    if user["email"] == teacher["email"]:
+                                        teacher["password"] = input("Enter New password: ")
+                                        user["password"] = teacher["password"]
+                                        teacher_edit_message()
+                                        save_data("data/users.json", users)
+                                        break
+    
+                            elif choice == "4":
+                                teacher["office"] = input("Enter New office: ")
+                                teacher_edit_message()
+    
+                            elif choice == "5":
+                                teacher["phone"] = input("Enter New Phone: ")
+                                teacher_edit_message()
+    
+                            elif choice == "0":
+                                break
+    
+                            else:
+                                print("Invalid choice.")
+                                continue
+    
+                        save_data("data/teachers.json", teachers)
+                        return
+    
+                if found == False:
+                    print("=" * 30)
+                    print("Teacher Not Found")
+                    print("=" * 30)
+            except ValueError:
+                print("Invaild input.")
 
     def delete_teacher(self):
 
@@ -155,127 +236,66 @@ class TeacherManager:
 
         print("Teacher not found.")
 
-    def view_all_teachers(self):
 
-        teachers = load_data("data/teachers.json")
-
-        if len(teachers) == 0:
-            print("No teachers found.")
-            return
-
-        print("All Teachers:")
-
-        for teacher in teachers:
-
-            print("-" * 20)
-
-            for key, value in teacher.items():
-
-                if key == "password":
-                    continue
-
-                print(key, ":", value)
-
-            print("-" * 20)
-
-
-    def edit_teacher(self):
-        teachers = load_data("data/teachers.json")
-        users = load_data("data/users.json")
-
-        try:
-
-            teacher_id = int(input("Enter Teacher ID: "))
-            found = False
-
-            for teacher in teachers:
-                if teacher["teacher_id"] == teacher_id:
-                    found = True
-                    while True:
-                        teacher_edit_menu()
-                        choice = input("Enter Your choice: ")
-
-                        if choice == "1":
-                            teacher["first_name"] = input("Enter New First Name: ")
-                            teacher_edit_message()
-
-                        elif choice == "2":
-                            teacher["last_name"] = input("Enter New Last Name: ")
-                            teacher_edit_message()
-
-                        elif choice == "3":
-                            for user in users:
-                                if user["email"] == teacher["email"]:
-                                    teacher["password"] = input("Enter New password: ")
-                                    user["password"] = teacher["password"]
-                                    teacher_edit_message()
-                                    save_data("data/users.json", users)
-                                    break
-
-                        elif choice == "4":
-                            teacher["office"] = input("Enter New office: ")
-                            teacher_edit_message()
-
-                        elif choice == "5":
-                            teacher["phone"] = input("Enter New Phone: ")
-                            teacher_edit_message()
-
-                        elif choice == "0":
-                            break
-
-                        else:
-                            print("Invalid choice.")
-                            continue
-
-                    save_data("data/teachers.json", teachers)
-                    return
-
-            if found == False:
-                print("=" * 30)
-                print("Teacher Not Found")
-                print("=" * 30)
-        except ValueError:
-            print("Invaild input.")
-
-    def delete_teacher(self):
-        teachers = load_data("data/teachers.json")
-        users = load_data("data/users.json")
-        try:
-            teacher_id = int(input("Enter Teacher ID: "))
-            for teacher in teachers:
-                if teacher["teacher_id"] == teacher_id:
-                    for user in users:
-                        if user["email"] == teacher["email"]:
-                            users.remove(user)
-                            save_data("data/users.json", users)
-                            break
-                    teachers.remove(teacher)
-                    save_data("data/teachers.json", teachers)
-                    print("Teacher Deleted Successfully")
-                    return
-            print("Teacher Not Found.")
-        except ValueError:
-            print("You Entered something wrong")
 
     def assign_course(self):
-        teachers = load_data("data/teachers.json")
-        if not teachers:
-            print("No Teachers Found.")
-            return
-        teacher_id = int(input("Enter Teacher ID: "))
-        course_id = input("Enter Course ID: ")
-        for teacher in teachers:
-            if teacher["teacher_id"] == teacher_id:
-                if course_id not in teacher["courses"]:
-                    teacher["courses"].append(course_id)
-                    save_data("data/teachers.json", teachers)
-                    print("Course Assigned Successfully")
-                else:
-                    print("Course Already Assigned")
-                return
-        print("Teacher Not Found.")
 
-    def _get_teacher_data(self, logged_in_user):
+        teachers = load_data("data/teachers.json")
+        courses = load_data("data/courses.json")
+
+        try:
+            teacher_id = int(input("Enter Teacher ID: "))
+        except ValueError:
+            print("Invalid Teacher ID.")
+            return
+
+        course_id = input("Enter Course ID: ").strip().upper()
+
+        found_teacher = False
+        found_course = False
+
+        for teacher in teachers:
+
+            if teacher["teacher_id"] == teacher_id:
+
+                found_teacher = True
+
+                for course in courses:
+
+                    if course["course_id"].upper() == course_id.upper():
+
+                        found_course = True
+
+
+                        if teacher["department"].title() != course["department"].title():
+                            print("Teacher and Course Departments Do Not Match.")
+                            return
+
+                        if course_id in teacher["courses"]:
+                            print("Course Already Assigned.")
+                            return
+
+                        if teacher_id in course["teacher_ids"]:
+                            print("Teacher Already Assigned To This Course.")
+                            return
+
+                        teacher["courses"].append(course_id)
+                        course["teacher_ids"].append(teacher_id)
+
+                        save_data("data/teachers.json", teachers)
+                        save_data("data/courses.json", courses)
+
+                        print("Course Assigned Successfully.")
+                        return
+
+                break
+
+        if not found_teacher:
+            print("Teacher Not Found.")
+        elif not found_course:
+            print("Course Not Found.")
+            
+    def get_teacher_data(self, logged_in_user):
         teachers = load_data("data/teachers.json")
         for teacher in teachers:
             if teacher["email"] == logged_in_user["email"]:
@@ -283,13 +303,17 @@ class TeacherManager:
         return None
 
     def view_assigned_courses(self, logged_in_user):
-        teacher = self._get_teacher_data(logged_in_user)
+        
+        teacher = self.get_teacher_data(logged_in_user)
+        
         if not teacher:
             print("Teacher not found.")
             return
+        
         print("=" * 40)
         print("Assigned Courses")
         print("-" * 40)
+        
         if not teacher.get("courses", []):
             print("No Courses Assigned")
         else:
@@ -297,96 +321,151 @@ class TeacherManager:
                 print(course)
 
     def view_enrolled_students(self, logged_in_user):
-        teacher = self._get_teacher_data(logged_in_user)
-        if not teacher:
-            print("Teacher not found.")
-            return
+
+        teacher = self.get_teacher_data(logged_in_user)
         courses = load_data("data/courses.json")
         students = load_data("data/students.json")
-        course_id = input("Enter Course ID: ").strip()
-        teacher_courses = [c.lower() for c in teacher.get("courses", [])]
-        if course_id.lower() not in teacher_courses:
+
+        if not teacher:
+            print("Teacher Not Found.")
+            return
+
+        course_id = input("Enter Course ID: ").strip().upper()
+
+        found_course = False
+        assigned = False
+
+        for teacher_course in teacher["courses"]:
+
+            if teacher_course.upper() == course_id.upper():
+                assigned = True
+                break
+
+        if not assigned:
             print("You are not assigned to teach this course.")
             return
+
         for course in courses:
-            if course["course_id"].lower() == course_id.lower():
-                enrolled_ids = course.get("enrolled_students", [])
-                if not enrolled_ids:
-                    print("No students are enrolled in this course.")
+
+            if course["course_id"].upper() == course_id.upper():
+
+                found_course = True
+
+                if not course["enrolled_students"]:
+                    print("No Students Are Enrolled In This Course.")
                     return
+
                 print("=" * 40)
-                print("Students Enrolled in", course["course_id"])
+                print("Students Enrolled In", course["course_id"])
                 print("=" * 40)
-                for student_id in enrolled_ids:
-                    found = False
+                
+                for student_id in course["enrolled_students"]:
+                
                     for student in students:
+                
                         if student["student_id"] == student_id:
-                            print("ID:", student["student_id"], "| Name:", student["first_name"], student["last_name"])
-                            found = True
+                
+                            print(
+                                "ID:",
+                                student["student_id"],
+                                "| Name:",
+                                student["first_name"],
+                                student["last_name"],
+                            )
+                            
+                            print("=" * 40)
                             break
-                    if not found:
-                        print("ID:", student_id, "| Name: Unknown")
-                print("=" * 40)
-                return
-        print("Course Not Found.")
+                
+        if not found_course:
+            print("Course Not Found.")
+            return
+
 
     def enter_grades(self, logged_in_user):
-        teacher = self._get_teacher_data(logged_in_user)
+        teacher = self.get_teacher_data(logged_in_user)
+        
+        assigned=False
+        
         if not teacher:
             print("Teacher not found.")
             return
+        
         courses = load_data("data/courses.json")
         students = load_data("data/students.json")
-        course_id = input("Enter Course ID: ").strip()
-        teacher_courses = [c.lower() for c in teacher.get("courses", [])]
-        if course_id.lower() not in teacher_courses:
+        
+        course_id = input("Enter Course ID: ").strip().upper()
+        
+        for teacher_course in teacher["courses"]:
+
+            if teacher_course.upper() == course_id.upper():
+                assigned = True
+                break
+
+        if not assigned:
             print("You are not assigned to teach this course.")
             return
+        
         try:
             student_id = int(input("Enter Student ID: "))
         except ValueError:
             print("Invalid Student ID.")
             return
+        
         enrolled = False
+        
         for course in courses:
-            if course["course_id"].lower() == course_id.lower():
-                if student_id in course.get("enrolled_students", []):
+            if course["course_id"].upper() == course_id.upper():
+                if student_id in course["enrolled_students"]:
                     enrolled = True
                 break
+            
         if not enrolled:
             print("Student is not registered in this course.")
             return
+        
         try:
             grade_value = float(input("Enter Grade: "))
         except ValueError:
             print("Invalid Grade input.")
             return
+        
         for student in students:
             if student["student_id"] == student_id:
                 if "grades" not in student:
                     student["grades"] = {}
-                student["grades"][course_id] = grade_value
+                student["grades"][course_id.upper()] = grade_value
                 save_data("data/students.json", students)
                 print("Grade Added Successfully")
                 return
 
     def edit_grades(self, logged_in_user):
-        teacher = self._get_teacher_data(logged_in_user)
+        
+        teacher = self.get_teacher_data(logged_in_user)
+        students = load_data("data/students.json")
+             
         if not teacher:
             print("Teacher not found.")
             return
-        courses = load_data("data/courses.json")
-        students = load_data("data/students.json")
-        course_id = input("Enter Course ID: ").strip()
-        teacher_courses = [c.lower() for c in teacher.get("courses", [])]
-        if course_id.lower() not in teacher_courses:
-            print("You are not assigned to teach this course.")
-            return
+        
+        course_id = input("Enter Course ID: ").strip().upper()
+        
+        
+        for teacher_course in teacher["courses"]:
+        
+            if teacher_course.upper() == course_id.upper():
+                assigned = True
+                break
+        
+            if not assigned:
+                print("You are not assigned to teach this course.")
+                return
+            
         try:
             student_id = int(input("Enter Student ID: "))
         except ValueError:
             print("Invalid Student ID.")
             return
+        
         for student in students:
             if student["student_id"] == student_id:
                 if "grades" in student and course_id in student["grades"]:
@@ -398,10 +477,10 @@ class TeacherManager:
                     save_data("data/students.json", students)
                     print("Grade Updated Successfully")
                     return
-        print("Record Not Found.")
+        print("Error: Couldn't edit student grade.")
 
     def take_attendance(self, logged_in_user):
-        teacher = self._get_teacher_data(logged_in_user)
+        teacher = self.get_teacher_data(logged_in_user)
         if not teacher:
             print("Teacher not found.")
             return

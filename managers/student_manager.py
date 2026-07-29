@@ -74,6 +74,22 @@ class StudentManager:
         print("Student ID :", student.student_id)
         print("Email      :", student.email)
         print("=" * 30)
+    
+    def view_all_students(self):
+
+        students = load_data("data/students.json")
+        if not students:
+            print("No Students Found.")
+            return
+        print("=" * 40)
+        print("All Students")
+        print("=" * 40)
+        for student in students:
+            for key, value in student.items():
+                if key == "password" or key == "role":
+                    continue
+                print(key, ":", value)
+            print("-" * 30)
 
     def find_student_by_id(self):
 
@@ -106,6 +122,85 @@ class StudentManager:
                 return
 
         print("Student Not Found.")
+    
+    def edit_student_data(self):
+    
+            students = load_data("data/students.json")
+            users = load_data("data/users.json")
+    
+            try:
+                student_id = int(input("Enter Student ID To Update: "))
+            except ValueError:
+                print("Invalid Input.")
+                return
+    
+            found = False
+    
+            for student in students:
+    
+                if student["student_id"] == student_id:
+    
+                    found = True
+    
+                    while True:
+    
+                        student_edit_menu()
+    
+                        choice = input("Enter Your Choice: ")
+    
+                        if choice == "1":
+    
+                            student["first_name"] = input(
+                                "Enter New First Name: "
+                            ).capitalize()
+    
+                            student_edit_message()
+    
+                        elif choice == "2":
+    
+                            student["last_name"] = input(
+                                "Enter New Last Name: "
+                            ).capitalize()
+    
+                            student_edit_message()
+    
+                        elif choice == "3":
+    
+                            student["password"] = input("Enter New Password: ")
+    
+                            for user in users:
+    
+                                if user["email"] == student["email"]:
+    
+                                    user["password"] = student["password"]
+                                    break
+    
+                            save_data("data/users.json", users)
+    
+                            student_edit_message()
+    
+                        elif choice == "4":
+    
+                            student["phone"] = input("Enter New Phone: ")
+    
+                            student_edit_message()
+    
+                        elif choice == "5":
+    
+                            student["academic_level"] = input("Enter New Academic Level: ")
+    
+                            student_edit_message()
+    
+                        elif choice == "0":
+                            break
+    
+                        else:
+                            print("Invalid Choice.")
+    
+                    save_data("data/students.json", students)
+    
+                    print("Student Updated Successfully.")
+                    return
 
     def delete_student(self):
 
@@ -122,6 +217,7 @@ class StudentManager:
         for student in students:
 
             if student["student_id"] == student_id:
+                found=True
 
                 for user in users:
 
@@ -145,126 +241,16 @@ class StudentManager:
                 print("Student Deleted Successfully.")
                 return
 
-        print("Student Not Found.")
+        print("=" * 30)
+        print("Student Not Found")
+        print("=" * 30)
 
-    def view_all_students(self):
-
-        students = load_data("data/students.json")
-
-        if not students:
-            print("No Students Found.")
-            return
-
-        print("=" * 40)
-        print("All Students")
-        print("=" * 40)
-
-        for student in students:
-
-            for key, value in student.items():
-
-                if key == "password":
-                    continue
-
-                print(key, ":", value)
-
-            print("-" * 30)
-
-    def edit_student_data(self):
+    def get_student_data(self, logged_in_user):
 
         students = load_data("data/students.json")
-        users = load_data("data/users.json")
-
-        try:
-            student_id = int(input("Enter Student ID To Update: "))
-        except ValueError:
-            print("Invalid Input.")
-            return
-
-        found = False
-
         for student in students:
-
-            if student["student_id"] == student_id:
-
-                found = True
-
-                while True:
-
-                    student_edit_menu()
-
-                    choice = input("Enter Your Choice: ")
-
-                    if choice == "1":
-
-                        student["first_name"] = input(
-                            "Enter New First Name: "
-                        ).capitalize()
-
-                        student_edit_message()
-
-                    elif choice == "2":
-
-                        student["last_name"] = input(
-                            "Enter New Last Name: "
-                        ).capitalize()
-
-                        student_edit_message()
-
-                    elif choice == "3":
-
-                        student["password"] = input("Enter New Password: ")
-
-                        for user in users:
-
-                            if user["email"] == student["email"]:
-
-                                user["password"] = student["password"]
-                                break
-
-                        save_data("data/users.json", users)
-
-                        student_edit_message()
-
-                    elif choice == "4":
-
-                        student["phone"] = input("Enter New Phone: ")
-
-                        student_edit_message()
-
-                    elif choice == "5":
-
-                        student["academic_level"] = input(
-                            "Enter New Academic Level: "
-                        )
-
-                        student_edit_message()
-
-                    elif choice == "0":
-                        break
-
-                    else:
-                        print("Invalid Choice.")
-
-                save_data("data/students.json", students)
-
-                print("Student Updated Successfully.")
-                return
-
-        if not found:
-
-            print("=" * 30)
-            print("Student Not Found")
-            print("=" * 30)
-
-        def get_student_data(self, logged_in_user):
-
-            students = load_data("data/students.json")
-
-            for student in students:
-
-                if student["email"] == logged_in_user["email"]:
-                    return student
+            if student["email"] == logged_in_user["email"]:
+                return student
 
         return None
 
@@ -282,7 +268,7 @@ class StudentManager:
 
         for key, value in student.items():
 
-            if key == "password":
+            if key == "password" or key == "role":
                 continue
 
             print(key.replace("_", " ").title(), ":", value)
@@ -338,6 +324,7 @@ class StudentManager:
         print("=" * 40)
 
         for course_id in grades:
+            
 
             course_name = course_id
 

@@ -1,1 +1,28 @@
-[]
+[
+    {
+        "teacher_id": 1001,
+        "first_name": "Ahmed",
+        "last_name": "Mamon",
+        "email": "1001@teacher.uni.edu",
+        "password": "123",
+        "phone": "01234567891",
+        "department": "Electrical power",
+        "office": "B103",
+        "courses": [
+            "EPM123"
+        ]
+    },
+    {
+        "teacher_id": 1002,
+        "first_name": "Youssef",
+        "last_name": "Essam",
+        "email": "1002@teacher.uni.edu",
+        "password": "12345",
+        "phone": "01234567891",
+        "department": "Computer Science",
+        "office": "B102",
+        "courses": [
+            "CSE123"
+        ]
+    }
+]

@@ -1,1 +1,40 @@
-[]
+[
+    {
+        "student_id": 2600001,
+        "first_name": "Ahmed",
+        "last_name": "Mamon",
+        "email": "2600001@student.uni.edu",
+        "password": "123",
+        "role": "Student",
+        "phone": "1",
+        "date_of_birth": "1",
+        "department": "Computer Science",
+        "gender": "male",
+        "academic_level": "3",
+        "courses": [
+            "CSE123"
+        ],
+        "grades": {
+            "CSE123": 80.0
+        }
+    },
+    {
+        "student_id": 2600002,
+        "first_name": "Youssef",
+        "last_name": "Ahmed",
+        "email": "2600002@student.uni.edu",
+        "password": "1234",
+        "role": "Student",
+        "phone": "012345678910",
+        "date_of_birth": "1/1/2007",
+        "department": "Electrical Power",
+        "gender": "male",
+        "academic_level": "3",
+        "courses": [
+            "EPM123"
+        ],
+        "grades": {
+            "EPM123": 70.0
+        }
+    }
+]

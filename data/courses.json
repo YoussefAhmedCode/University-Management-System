@@ -1,1 +1,26 @@
-[]
+[
+    {
+        "course_id": "CSE123",
+        "course_name": "Programming using python",
+        "department": "Computer Science",
+        "credit_hours": 3,
+        "teacher_ids": [
+            1002
+        ],
+        "enrolled_students": [
+            2600001
+        ]
+    },
+    {
+        "course_id": "EPM123",
+        "course_name": "Electrical Measurements",
+        "department": "Electrical Power",
+        "credit_hours": 3,
+        "teacher_ids": [
+            1001
+        ],
+        "enrolled_students": [
+            2600002
+        ]
+    }
+]

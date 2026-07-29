@@ -1,8 +1,27 @@
 [
     {
-        "name": "Ahmed Mamon",
-        "email": "admin123@uni.edu.eg",
+        "email": "admin123@admin.uni.edu",
         "password": "Aa1162006",
         "role": "Admin"
+    },
+    {
+        "email": "1001@teacher.uni.edu",
+        "password": "123",
+        "role": "Teacher"
+    },
+    {
+        "email": "2600001@student.uni.edu",
+        "password": "123",
+        "role": "Student"
+    },
+    {
+        "email": "2600002@student.uni.edu",
+        "password": "1234",
+        "role": "Student"
+    },
+    {
+        "email": "1002@teacher.uni.edu",
+        "password": "12345",
+        "role": "Teacher"
     }
 ]
