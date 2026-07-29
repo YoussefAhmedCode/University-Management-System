@@ -51,7 +51,7 @@ class DepartmentManager:
         students = load_data("data/students.json")
         courses = load_data("data/courses.json")
 
-        department_id = input("Enter Department ID To Update: ").upper
+        department_id = input("Enter Department ID To Update: ").upper()
 
         found = False
 

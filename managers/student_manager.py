@@ -28,13 +28,13 @@ class StudentManager:
 
         while True:
 
-            department_input = input("Enter Student Department: ").strip()
+            department_input = input("Enter Student Department: ").strip().title()
 
             found = False
 
             for department in departments:
 
-                if department["name"].lower() == department_input.lower():
+                if department["name"].title() == department_input.title():
 
                     department_name = department["name"]
                     found = True
@@ -113,7 +113,7 @@ class StudentManager:
 
                 for key, value in student.items():
 
-                    if key == "password":
+                    if key == "password" or key == "role":
                         continue
 
                     print(key, ":", value)
@@ -229,7 +229,7 @@ class StudentManager:
 
                 for course in courses:
 
-                    if student_id in course.get("enrolled_students", []):
+                    if student_id in course["enrolled_students"]:
                         course["enrolled_students"].remove(student_id)
 
                 students.remove(student)
@@ -281,7 +281,7 @@ class StudentManager:
             print("Student Not Found.")
             return
 
-        enrolled_courses = student.get("courses", [])
+        enrolled_courses = student["courses"]
 
         if not enrolled_courses:
             print("You are not registered in any courses.")
@@ -311,7 +311,7 @@ class StudentManager:
             print("Student Not Found.")
             return
 
-        grades = student.get("grades", {})
+        grades = student["grades"]
 
         if not grades:
             print("No Grades Available.")
