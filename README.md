@@ -42,11 +42,7 @@ The system allows administrators to manage students, teachers, courses, departme
 - Delete Department
 - Assign Head of Department
 
-### Reports
-- Student Report
-- Teacher Report
-- Course Report
-- Department Report
+
 
 ---
 
