@@ -1,7 +1,7 @@
 from storage.file_manager import load_data
 
 
-class AuthManger:
+class AuthManager:
     def __init__(self):
         pass
 

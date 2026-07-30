@@ -2,13 +2,25 @@
     {
         "department_id": "EPM",
         "name": "Electrical Power",
-        "building": "B3",
-        "head_of_department": "Ahmed Mamon"
+        "building": "B2",
+        "head_of_department": "Youssef Ahmed"
+    },
+    {
+        "department_id": "ECE",
+        "name": "Electronics",
+        "building": "B2",
+        "head_of_department": "Mohamed Mamon"
     },
     {
         "department_id": "CSE",
         "name": "Computer Science",
-        "building": "B2",
-        "head_of_department": "Youssef Essam"
+        "building": "C1",
+        "head_of_department": "None"
+    },
+    {
+        "department_id": "ABC",
+        "name": "Ahmed",
+        "building": "b4",
+        "head_of_department": "Ahmed Mamon"
     }
 ]

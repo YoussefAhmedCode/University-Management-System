@@ -157,39 +157,46 @@ class CourseManager:
 
                     elif choice == "3":
 
-                        teacher_id = int(input("Enter Old Teacher ID: "))
-                        teacher_new_id = int(input("Enter New Teacher ID: "))
+                        try:
+                            old_teacher_id = int(input("Enter Old Teacher ID: "))
+                            new_teacher_id = int(input("Enter New Teacher ID: "))
+                        except ValueError:
+                            print("Invalid Teacher ID.")
+                            continue
 
-                        found_teacher = False
-
+                        new_teacher = None
                         for teacher in teachers:
-                            if teacher["teacher_id"] == teacher_new_id:
-                                found_teacher = True
+                            if teacher["teacher_id"] == new_teacher_id:
+                                new_teacher = teacher
                                 break
-                            
-                        if not found_teacher:
+
+                        if not new_teacher:
                             print("New Teacher Not Found.")
                             continue
 
-                        for i in range(len(course["teacher_ids"])):
-                        
-                            if course["teacher_ids"][i] == teacher_id:
-                                course["teacher_ids"][i] = teacher_new_id
-                                break
-                            
-                        else:
-                            print("Old Teacher Is Not Assigned To This Course.")
+                        if new_teacher["department"].title() != course["department"].title():
+                            print("Teacher and Course Departments Do Not Match.")
                             continue
 
+                        old_teacher_found = False
+                        for i in range(len(course["teacher_ids"])):
+                            if course["teacher_ids"][i] == old_teacher_id:
+                                course["teacher_ids"][i] = new_teacher_id
+                                old_teacher_found = True
+                                break
+
+                        if not old_teacher_found:
+                            if course["teacher_ids"]:
+                                print("Old Teacher Is Not Assigned To This Course.")
+                                continue
+                            course["teacher_ids"].append(new_teacher_id)
+
                         for teacher in teachers:
-                        
-                            if teacher["teacher_id"] == teacher_id:
-                            
-                                if course_id in teacher["courses"]:
+                            if teacher["teacher_id"] == old_teacher_id:
+                                if course_id in teacher.get("courses", []):
                                     teacher["courses"].remove(course_id)
 
-                            elif teacher["teacher_id"] == teacher_new_id:
-                            
+                            if teacher["teacher_id"] == new_teacher_id:
                                 if course_id not in teacher["courses"]:
                                     teacher["courses"].append(course_id)
 
@@ -358,6 +365,7 @@ class CourseManager:
         save_data("data/courses.json", courses)
 
     def register_course(self, logged_in_user):
+        
         courses = load_data("data/courses.json")
         students = load_data("data/students.json")
 
@@ -425,7 +433,7 @@ class CourseManager:
 
         for course in courses:
 
-            if course["course_id"] == course_id:
+            if course["course_id"].upper() == course_id.upper():
 
                 found_course = True
 

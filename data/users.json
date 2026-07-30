@@ -6,13 +6,13 @@
     },
     {
         "email": "1001@teacher.uni.edu",
-        "password": "123",
+        "password": "1234",
         "role": "Teacher"
     },
     {
-        "email": "2600001@student.uni.edu",
-        "password": "123",
-        "role": "Student"
+        "email": "1003@teacher.uni.edu",
+        "password": "123456",
+        "role": "Teacher"
     },
     {
         "email": "2600002@student.uni.edu",
@@ -20,8 +20,33 @@
         "role": "Student"
     },
     {
-        "email": "1002@teacher.uni.edu",
+        "email": "2600003@student.uni.edu",
         "password": "12345",
+        "role": "Student"
+    },
+    {
+        "email": "2600004@student.uni.edu",
+        "password": "123456",
+        "role": "Student"
+    },
+    {
+        "email": "2600005@student.uni.edu",
+        "password": "123",
+        "role": "Student"
+    },
+    {
+        "email": "1004@teacher.uni.edu",
+        "password": "123",
+        "role": "Teacher"
+    },
+    {
+        "email": "1005@teacher.uni.edu",
+        "password": "123",
+        "role": "Teacher"
+    },
+    {
+        "email": "1006@teacher.uni.edu",
+        "password": "123",
         "role": "Teacher"
     }
 ]

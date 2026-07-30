@@ -311,7 +311,7 @@ class StudentManager:
             print("Student Not Found.")
             return
 
-        grades = student["grades"]
+        grades = student.get("grades", {})
 
         if not grades:
             print("No Grades Available.")

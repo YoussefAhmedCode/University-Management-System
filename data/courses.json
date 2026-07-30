@@ -1,23 +1,58 @@
 [
     {
-        "course_id": "CSE123",
-        "course_name": "Programming using python",
-        "department": "Computer Science",
-        "credit_hours": 3,
-        "teacher_ids": [
-            1002
-        ],
-        "enrolled_students": [
-            2600001
-        ]
-    },
-    {
         "course_id": "EPM123",
-        "course_name": "Electrical Measurements",
+        "course_name": "Measurements",
         "department": "Electrical Power",
         "credit_hours": 3,
         "teacher_ids": [
+            1004
+        ],
+        "enrolled_students": []
+    },
+    {
+        "course_id": "ECE456",
+        "course_name": "Circuit Analysis",
+        "department": "Electronics",
+        "credit_hours": 3,
+        "teacher_ids": [
             1001
+        ],
+        "enrolled_students": []
+    },
+    {
+        "course_id": "ECE789",
+        "course_name": "Digital Logic",
+        "department": "Electronics",
+        "credit_hours": 4,
+        "teacher_ids": [
+            1001
+        ],
+        "enrolled_students": [
+            2600003,
+            2600005
+        ]
+    },
+    {
+        "course_id": "CSE789",
+        "course_name": "Programming Fundamentals",
+        "department": "Computer Science",
+        "credit_hours": 3,
+        "teacher_ids": [
+            1003,
+            1005
+        ],
+        "enrolled_students": [
+            2600004,
+            2600003
+        ]
+    },
+    {
+        "course_id": "EPM789",
+        "course_name": "Circuits",
+        "department": "Electrical Power",
+        "credit_hours": 3,
+        "teacher_ids": [
+            1004
         ],
         "enrolled_students": [
             2600002

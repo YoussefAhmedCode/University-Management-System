@@ -4,25 +4,64 @@
         "first_name": "Ahmed",
         "last_name": "Mamon",
         "email": "1001@teacher.uni.edu",
-        "password": "123",
+        "password": "1234",
         "phone": "01234567891",
-        "department": "Electrical power",
-        "office": "B103",
+        "department": "Electronics",
+        "office": "B201",
         "courses": [
-            "EPM123"
+            "ECE456",
+            "ECE789"
         ]
     },
     {
-        "teacher_id": 1002,
-        "first_name": "Youssef",
-        "last_name": "Essam",
-        "email": "1002@teacher.uni.edu",
-        "password": "12345",
-        "phone": "01234567891",
+        "teacher_id": 1003,
+        "first_name": "Sara",
+        "last_name": "Ahmed",
+        "email": "1003@teacher.uni.edu",
+        "password": "123456",
+        "phone": "01234567893",
         "department": "Computer Science",
-        "office": "B102",
+        "office": "C301",
         "courses": [
-            "CSE123"
+            "CSE789"
         ]
+    },
+    {
+        "teacher_id": 1004,
+        "first_name": "Youssef",
+        "last_name": "Ahmed",
+        "email": "1004@teacher.uni.edu",
+        "password": "123",
+        "phone": "01234567891",
+        "department": "Electrical Power",
+        "office": "B201",
+        "courses": [
+            "EPM123",
+            "EPM789"
+        ]
+    },
+    {
+        "teacher_id": 1005,
+        "first_name": "Ahmed",
+        "last_name": "Mamon",
+        "email": "1005@teacher.uni.edu",
+        "password": "123",
+        "phone": "01094228111",
+        "department": "Computer Science",
+        "office": "B123",
+        "courses": [
+            "CSE789"
+        ]
+    },
+    {
+        "teacher_id": 1006,
+        "first_name": "Ahmed",
+        "last_name": "Mamon",
+        "email": "1006@teacher.uni.edu",
+        "password": "123",
+        "phone": "1",
+        "department": "Ahmed",
+        "office": "b123",
+        "courses": []
     }
 ]

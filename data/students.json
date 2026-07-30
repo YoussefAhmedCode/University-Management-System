@@ -1,40 +1,75 @@
 [
     {
-        "student_id": 2600001,
-        "first_name": "Ahmed",
-        "last_name": "Mamon",
-        "email": "2600001@student.uni.edu",
-        "password": "123",
-        "role": "Student",
-        "phone": "1",
-        "date_of_birth": "1",
-        "department": "Computer Science",
-        "gender": "male",
-        "academic_level": "3",
-        "courses": [
-            "CSE123"
-        ],
-        "grades": {
-            "CSE123": 80.0
-        }
-    },
-    {
         "student_id": 2600002,
-        "first_name": "Youssef",
-        "last_name": "Ahmed",
+        "first_name": "Ali",
+        "last_name": "Hassan",
         "email": "2600002@student.uni.edu",
         "password": "1234",
         "role": "Student",
-        "phone": "012345678910",
-        "date_of_birth": "1/1/2007",
+        "phone": "01234567894",
+        "date_of_birth": "15/3/2007",
         "department": "Electrical Power",
+        "gender": "male",
+        "academic_level": "2",
+        "courses": [
+            "EPM789",
+            "EPM456"
+        ],
+        "grades": {
+            "EPM456": 92.0
+        }
+    },
+    {
+        "student_id": 2600003,
+        "first_name": "Omar",
+        "last_name": "Youssef",
+        "email": "2600003@student.uni.edu",
+        "password": "12345",
+        "role": "Student",
+        "phone": "01234567895",
+        "date_of_birth": "22/8/2006",
+        "department": "Electronics",
         "gender": "male",
         "academic_level": "3",
         "courses": [
-            "EPM123"
+            "ECE789",
+            "CSE789"
         ],
         "grades": {
-            "EPM123": 70.0
+            "ECE789": 80.0
         }
+    },
+    {
+        "student_id": 2600004,
+        "first_name": "Layla",
+        "last_name": "Khaled",
+        "email": "2600004@student.uni.edu",
+        "password": "123456",
+        "role": "Student",
+        "phone": "01234567896",
+        "date_of_birth": "10/1/2008",
+        "department": "Computer Science",
+        "gender": "female",
+        "academic_level": "1",
+        "courses": [
+            "CSE789"
+        ],
+        "grades": {}
+    },
+    {
+        "student_id": 2600005,
+        "first_name": "Youssef",
+        "last_name": "Ahmed",
+        "email": "2600005@student.uni.edu",
+        "password": "123",
+        "role": "Student",
+        "phone": "01234567891",
+        "date_of_birth": "11/6/2006",
+        "department": "Electronics",
+        "gender": "male",
+        "academic_level": "2",
+        "courses": [
+            "ECE789"
+        ]
     }
 ]

@@ -1,12 +1,22 @@
 [
     {
         "student_id": 2600001,
-        "course_id": "CSE123",
+        "course_id": "EPM123",
+        "status": "Present"
+    },
+    {
+        "student_id": 2600001,
+        "course_id": "EPM456",
         "status": "Present"
     },
     {
         "student_id": 2600002,
-        "course_id": "EPM123",
+        "course_id": "EPM456",
+        "status": "Absent"
+    },
+    {
+        "student_id": 2600003,
+        "course_id": "ECE789",
         "status": "Present"
     }
 ]

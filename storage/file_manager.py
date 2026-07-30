@@ -6,6 +6,6 @@ def load_data(filename):
     except (FileNotFoundError, json.JSONDecodeError):
         return []
 
-def save_data(filename,data):
+def save_data(filename, data):
     with open(filename, 'w') as fh:
         json.dump(data, fh, indent=4)

@@ -1,4 +1,3 @@
-from storage.file_manager import load_data, save_data
 
 
 class Course:

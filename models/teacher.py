@@ -1,10 +1,5 @@
-from models import student
 from models.user import User
-from storage.file_manager import load_data, save_data
-import utils
-from utils.id_generator import generate_teacher_id
-from menus import teacher_edit_message
-import json
+
 
 
 class Teacher(User):
@@ -55,7 +50,3 @@ class Teacher(User):
         print("Phone:", self.phone)
         print("Department:", self.department)
         print("Office:", self.office)
-
-\
-
-   

@@ -74,6 +74,7 @@ class TeacherManager:
         print("=" * 30)
 
         return teacher
+    
     def view_all_teachers(self):
 
         teachers = load_data("data/teachers.json")
@@ -442,7 +443,9 @@ class TeacherManager:
         
         teacher = self.get_teacher_data(logged_in_user)
         students = load_data("data/students.json")
-             
+        
+        assigned = False
+        
         if not teacher:
             print("Teacher not found.")
             return
@@ -456,9 +459,9 @@ class TeacherManager:
                 assigned = True
                 break
         
-            if not assigned:
-                print("You are not assigned to teach this course.")
-                return
+        if not assigned:
+            print("You are not assigned to teach this course.")
+            return
             
         try:
             student_id = int(input("Enter Student ID: "))
